@@ -17,7 +17,7 @@ const App = ({ classes }) => {
     // showDummy();
     console.log('closed')
     inputContainerRef.current.style.top = "0px";
-    messageListContainerRef.current.style.height = 'unset';
+    messageListContainerRef.current.style.height = 'fit-content';
   };
 
   // const hideInput = () => {
