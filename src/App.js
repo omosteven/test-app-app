@@ -18,6 +18,20 @@ const App = ({ classes }) => {
     console.log('closed')
     inputContainerRef.current.style.top = "0px";
     messageListContainerRef.current.style.height = 'fit-content';
+
+    inputContainerRef.current.style.position = "absolute";
+    inputContainerRef.current.style.zIndex = 0;
+    inputContainerRef.current.style.left = "99999px";
+    inputContainerRef.current.style.top = "0px";
+    inputContainerRef.current.removeEventListener("touchmove", e => {
+      e.preventDefault();
+    });
+    messageListContainerRef.current.style.height = "calc(100vh - 128px)";
+    if (navbarContainerRef.current) {
+      navbarContainerRef.current.removeEventListener("touchmove", e => {
+        e.preventDefault();
+      });
+    }
   };
 
   // const hideInput = () => {
@@ -41,11 +55,11 @@ const App = ({ classes }) => {
     console.log('opened ')
     // Moves the real input on-screen
     inputContainerRef.current.style.display='initial'
-    // inputContainerRef.current.style.position = "absolute";
-    // inputContainerRef.current.style.zIndex = 999;
-    // inputContainerRef.current.style.left = "0px";
-    // inputContainerRef.current.style.width = "100%";
-    // inputContainerRef.current.style.height = "64px";
+    inputContainerRef.current.style.position = "absolute";
+    inputContainerRef.current.style.zIndex = 999;
+    inputContainerRef.current.style.left = "0px";
+    inputContainerRef.current.style.width = "100%";
+    inputContainerRef.current.style.height = "64px";
     inputContainerRef.current.addEventListener("touchmove", e => {
       e.preventDefault();
     });
