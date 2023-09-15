@@ -1,66 +1,55 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import MessageList from "./MessageList";
-import "./App.css"
 
 const App = ({ classes }) => {
   const inputRef = useRef();
   const inputContainerRef = useRef();
+  const dummyRef = useRef();
   const messageListContainerRef = useRef();
   const navbarContainerRef = useRef();
+  const dummyContainerRef = useRef();
   //const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [value, setValue] = useState("");
 
+  const handleDummyFocus = () => {
+    inputRef.current.focus();
+    //setIsKeyboardOpen(true);
+    hideDummy();
+    showInput();
+  };
 
   const handleInputBlur = () => {
+    dummyRef.current.focus();
     //setIsKeyboardOpen(false);
-    // hideInput();
-    // showDummy();
-    console.log('closed')
-    inputContainerRef.current.style.top = "0px";
-    messageListContainerRef.current.style.height = 'fit-content';
+    hideInput();
+    showDummy();
+  };
 
+  const hideInput = () => {
     inputContainerRef.current.style.position = "absolute";
     inputContainerRef.current.style.zIndex = 0;
     inputContainerRef.current.style.left = "99999px";
     inputContainerRef.current.style.top = "0px";
-    inputContainerRef.current.removeEventListener("touchmove", e => {
+    inputContainerRef.current.removeEventListener("touchmove", (e) => {
       e.preventDefault();
     });
     messageListContainerRef.current.style.height = "calc(100vh - 128px)";
     if (navbarContainerRef.current) {
-      navbarContainerRef.current.removeEventListener("touchmove", e => {
+      navbarContainerRef.current.removeEventListener("touchmove", (e) => {
         e.preventDefault();
       });
     }
   };
 
-  // const hideInput = () => {
-  //   // inputContainerRef.current.style=
-  //   // inputContainerRef.current.style.position = "absolute";
-  //   // inputContainerRef.current.style.zIndex = 0;
-  //   // inputContainerRef.current.style.left = "99999px";
-  //   // inputContainerRef.current.style.top = "0px";
-  //   inputContainerRef.current.removeEventListener("touchmove", e => {
-  //     e.preventDefault();
-  //   });
-  //   messageListContainerRef.current.style.height = "calc(100vh - 128px)";
-  //   if (navbarContainerRef.current) {
-  //     navbarContainerRef.current.removeEventListener("touchmove", e => {
-  //       e.preventDefault();
-  //     });
-  //   }
-  // };
-
   const showInput = () => {
-    console.log('opened ')
     // Moves the real input on-screen
-    inputContainerRef.current.style.display='initial'
     inputContainerRef.current.style.position = "absolute";
     inputContainerRef.current.style.zIndex = 999;
     inputContainerRef.current.style.left = "0px";
     inputContainerRef.current.style.width = "100%";
     inputContainerRef.current.style.height = "64px";
-    inputContainerRef.current.addEventListener("touchmove", e => {
+    inputContainerRef.current.addEventListener("touchmove", (e) => {
       e.preventDefault();
     });
     // Positions the real input at the right height for the type of iPhone
@@ -91,13 +80,13 @@ const App = ({ classes }) => {
     }
 
     if (navbarContainerRef.current) {
-      navbarContainerRef.current.addEventListener("touchmove", e => {
+      navbarContainerRef.current.addEventListener("touchmove", (e) => {
         e.preventDefault();
       });
     }
 
     if (messageListContainerRef.current) {
-      messageListContainerRef.current.addEventListener("touchmove", e => {
+      messageListContainerRef.current.addEventListener("touchmove", (e) => {
         if (!e.currentTarget) {
           return;
         }
@@ -113,34 +102,83 @@ const App = ({ classes }) => {
     }
   };
 
-  // window.addEventListener("resize", (e) => {
-  //  console.log('keyboard opened',e)
-  // });
+  const hideDummy = () => {
+    dummyContainerRef.current.style.display = "none";
+  };
+
+  const showDummy = () => {
+    dummyContainerRef.current.style.display = "block";
+  };
+
   return (
-    <div className="app-body">
-      <div style={{width:'100%'}}>
-        <div ref={navbarContainerRef} style={{position:'fixed'}}>
+    <div>
+      <div style={{ width: "100%" }}>
+        <div ref={navbarContainerRef}>
           <header>Navbar</header>
         </div>
-        <div ref={inputContainerRef} style={{position:'fixed', bottom:'10px'}}>
+        <div
+          ref={inputContainerRef}
+          style={{
+            position: "absolute",
+            left: 99999,
+            height: 64,
+            backgroundColor: "yellow",
+          }}
+        >
           <input
-            inputRef={inputRef}
+            ref={inputRef}
             variant="outlined"
             fullwidth="true"
+            style={{
+              height: "3rem",
+            }}
             // onFocus={setIsKeyboardOpen(false)}
             onBlur={() => handleInputBlur()}
-            onFocus={()=>showInput()}
             placeholder="real input"
             autoComplete="false"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
           />
         </div>
         <div
           ref={messageListContainerRef}
-          
+          style={{
+            position: "absolute",
+            bottom: 64,
+            left: 0,
+            top: 64,
+            overflow: "auto",
+            width: "inherit",
+            backgroundColor: "grey",
+          }}
         >
           <MessageList />
         </div>
-       
+        <div
+          ref={dummyContainerRef}
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            height: 64,
+            width: "100%",
+            backgroundColor: "red",
+          }}
+        >
+          <input
+            style={{
+              height: "3rem",
+            }}
+            ref={dummyRef}
+            variant="outlined"
+            fullwidth="true"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onFocus={() => handleDummyFocus()}
+            // onBlur={setIsKeyboardOpen(false)}
+            placeholder="Dummy input"
+          />
+        </div>
       </div>
     </div>
   );

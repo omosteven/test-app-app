@@ -28,15 +28,20 @@ const messages = [
   "y",
   "z",
   "aa",
-  "bb",
+  "bb"
 ];
 
 const MessageList = ({ classes }) => {
   return (
     <React.Fragment>
-      {messages.map((message, i) => {
+      {messages.map((message,i) => {
         return (
-          <div key={i}>
+          <div key={i} style={{
+             width: "70%",
+      backgroundColor: 'green',
+      margin: '10px',
+      padding: '10px'
+          }}>
             <p>{message}</p>
           </div>
         );
@@ -45,4 +50,4 @@ const MessageList = ({ classes }) => {
   );
 };
 
-export default MessageList
+export default MessageList;
