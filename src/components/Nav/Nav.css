@@ -1,0 +1,43 @@
+.nav {
+    position: fixed;
+    display: grid;
+    background-color: #fff;
+    height: 3.3em;
+    top: 0;
+    width: 100%;
+    border-bottom: 0.1em solid #dbdbdb;
+    grid-template-columns: 2fr 1fr 1fr 0.5fr;
+}
+button {
+    cursor: pointer;
+    /* padding: none; */
+    border: none;
+    background: none;
+    /* transition: all 0.2s ease-in-out; */
+}
+.logo {
+    text-decoration: none;
+}
+
+.logo > img {
+    vertical-align: middle;
+}
+.searchInput{
+background: #fafafa;
+height: 2em;
+margin: 0.8em;
+width: 15.5em;
+border: 0.07em solid #dbdbdb;
+border-radius: 0.2em;
+}
+input{
+    outline: none;
+}
+.linksIcon{
+display: grid;
+grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.linksIcon i {
+    font-size: 1.3rem;
+    color: #252525;
+}
